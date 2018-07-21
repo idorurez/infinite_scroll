@@ -4,26 +4,21 @@ using UnityEngine;
 
 public class InputEvents : MonoBehaviour {
 
-	public delegate void KeyUp (float distance);
-	public delegate void KeyDown (float distance);
+	// Could have made a single/generic I guess
+	public delegate void KeyUp (float distance);			// up signature
+	public delegate void KeyDown (float distance);			// down signature
 
 	public static event KeyUp OnKeyUp;
 	public static event KeyDown OnKeyDown;
 
 	public float scrollSpeed;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void OnGUI () {
-		if (Input.GetKey("up")) {
+	void Update () {
+		if (Input.GetKey("up") || (Input.GetAxis("Mouse ScrollWheel") < 0f)) {
 			OnKeyUp (scrollSpeed);
 		}
 
-		if (Input.GetKey ("down")) {
+		if (Input.GetKey ("down")  || (Input.GetAxis("Mouse ScrollWheel") > 0f)) {
 			OnKeyDown (-scrollSpeed);
 		}
 	}
